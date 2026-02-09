@@ -2,6 +2,7 @@ package com.example.Ecom.controller;
 
 import com.example.Ecom.model.Item;
 import com.example.Ecom.service.ItemService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +17,14 @@ public class ItemController {
     }
 
 
+    @Operation(summary = "Add a new item")
     @PostMapping("/add")
     public ResponseEntity<Item> addItem(@Valid @RequestBody Item item) {
-        Item item1=itemService.addItem(item);
-        return new ResponseEntity<>(item1, HttpStatus.CREATED);
+        return new ResponseEntity<>(itemService.addItem(item), HttpStatus.CREATED);
     }
 
 
+    @Operation(summary = "Get item by ID")
     @GetMapping("/getById/{id}")
     public ResponseEntity<?> getItem(@PathVariable Long id) {
         Item item = itemService.getItemById(id);
@@ -32,4 +34,5 @@ public class ItemController {
         }
         return ResponseEntity.ok(item);
     }
+
 }
